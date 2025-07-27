@@ -91,6 +91,3 @@ if __name__ == '__main__':
 
 
 
-
-
-# show all grn's issued since 1st January 2025. show the grn number, supplier invoice number, shipper name, transport document, total gross wt and total shipping cost
