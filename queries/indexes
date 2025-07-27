@@ -1,0 +1,27 @@
+select
+    s.table_schema
+    , s.table_name
+    , s.index_name
+    , case
+        when s.index_name = 'PRIMARY' then 'PK'
+        when s.non_unique = 0 then 'UNIQUE INDEX'
+        else 'INDEX'
+      end index_type
+    , group_concat(s.column_name order by s.seq_in_index separator ', ') index_columns
+    , concat (case
+                when s.index_name = 'PRIMARY' then 'PK'
+                when s.non_unique = 0 then 'UNIQUE INDEX'
+                else 'INDEX'
+              end, ' - ', group_concat(s.column_name order by s.seq_in_index separator ', ') ) resultrow
+from
+    information_schema.statistics s
+        inner join  information_schema.tables t
+            on s.table_schema = t.table_schema
+                and s.table_name = t.table_name
+where
+    s.table_schema = '{database}'
+    and s.table_name = '{tablename}'
+group by
+    s.table_schema, s.table_name, s.index_name, s.non_unique
+order by
+    s.table_schema, s.table_name, s.index_name

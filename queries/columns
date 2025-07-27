@@ -1,0 +1,10 @@
+select
+    -- group_concat(c.column_name order by  c.ordinal_position separator ', ')  resultrow
+    c.column_name resultrow
+from
+	information_schema.columns c
+where
+    c.table_schema = '{database}'
+    and c.table_name = '{tablename}'
+order by
+    c.ordinal_position

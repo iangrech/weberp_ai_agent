@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exception</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        pre {
+
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <h2 class="exception_h2">An Exception has occurred</h2>
+        <pre class="exception_pre">{{ message }}</pre>
+    </p>
+    <p>
+        <h2 class="exception_h2">User question:</h2>
+        <pre class="exception_pre">{{ orig_question }}</pre>
+    </p>
+    <p>
+        <h2 class="exception_h2">AI Response:</h2>
+        <pre class="exception_pre">{{ response }}</pre>
+    </p>
+    <p>
+        <h2 class="exception_h2">AI Query:</h2>
+        <pre class="exception_pre">{{ query }}</pre>
+    </p>
+    <p/>
+    <p/>
+    <div style="margin-top: 30px;">
+        <a href="/" class="exception_button">Main Page</a>
+    </div>
+</body>
+</html>

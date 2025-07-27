@@ -1,0 +1,10 @@
+select
+    concat(table_name , '.', column_name, ' references ', referenced_table_name , '.', referenced_column_name) resultrow
+from
+    information_schema.key_column_usage
+where
+    table_schema = '{database}'
+    and table_name = '{tablename}'
+    and referenced_table_name is not null
+order by
+    constraint_name

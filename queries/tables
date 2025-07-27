@@ -1,0 +1,11 @@
+select
+    t.table_name
+from
+    information_schema.tables t
+where
+    t.table_schema = '{database}'
+    and t.table_type = 'BASE TABLE'
+order by
+    t.table_name
+;
+

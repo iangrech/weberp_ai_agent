@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ heading }}</h1>
+
+        <form method="POST" class="ai-form">
+            <!--<textarea name="ai_question" placeholder="Type your ask to the AI here..." class="ai-input">{{ query }}</textarea>-->
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Question</th>
+                        <th>Query by AI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="60%"><textarea name="ai_question" placeholder="Type your ask to the AI here..." class="ai-input">{{ orig_question }}</textarea></td>
+                        <td width="40%"><textarea name="genqry" placeholder="generated query will be here" class="user-question">{{ query }}</textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p/>
+            <button type="submit" class="execute-btn">Execute</button>
+        </form>
+
+        {% if not dataframe.empty %}
+            <div class="results">
+                <h3>AI Results:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="{{dataframe.shape[1]}}">Resultset</th>
+                        </tr>
+                        <tr class="results_table">
+                            {% for column in dataframe.columns %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for _, row in dataframe.iterrows() %}
+                            <tr>
+                                {% for value in row %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% elif request.method == 'POST' %}
+            <p class="no-results">No results to display or query didn't return any data.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
