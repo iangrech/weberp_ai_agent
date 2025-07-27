@@ -35,7 +35,7 @@ def index():
             question4ai = request.form.get('ai_question', '')
 
             # ai call system message
-            ai.system_message.append(f'You are a WebERP {weberp.weberp_version} consultant. ')
+            ai.system_message.append(f'You are a webERP {weberp.weberp_version} consultant. ')
             ai.system_message.append(f'Use the MySQL {weberp.mysql_version} database schema definition below to generate valid SQL queries which will then be used to retrieve data which the user requested.')#
             ai.system_message.append(f'Database schema definition: {weberp.get_database_definition()}')
             ai.system_message.append('''The response must be strictly formatted as defined below without additional details 
@@ -71,8 +71,8 @@ def index():
                 original_question = 'Improper response received.\n\n' + response
 
         return render_template('index.html'
-                               , title='WebERP AI Interface'
-                               , heading='WebERP AI Interface'
+                               , title='webERP AI Interface'
+                               , heading='webERP AI Interface'
                                , dataframe=df
                                , query=aigenquery
                                , orig_question=original_question)
