@@ -12,13 +12,6 @@ ai = aiapi.ai()
 
 app = Flask(__name__)
 
-def handle_excpetion(ex:Exception, response:str, aigenquery:str, original_question:str):
-    return render_template('exception.html'
-                           , message=traceback.format_exc()
-                           , response=response
-                           , query=aigenquery
-                           , orig_question=original_question
-                           )
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
