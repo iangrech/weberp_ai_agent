@@ -1,20 +1,49 @@
-import openai_interface as aiapi
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import json
 import pandas as pd
-import weberp_interface
 import traceback
 
-#instancing
-weberp = weberp_interface.interface()
-ai = aiapi.ai()
+import weberp_xmlrpc  as wxr
+import weberp_interface
+import openai_interface as aiapi
 
+
+weberp = None
+ai = aiapi.ai()
 
 app = Flask(__name__)
 
+application_database = ''
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def login():
+    error = None
+    if request.method == 'POST':
+        application_database = request.form['database']
+        username = request.form['username']
+        password = request.form['password']
+
+        c = wxr.xmlrpcinterface(config_file='config.cfg')
+        if c.connect():
+            success =  c.login(application_database, username, password)
+            # with Python >=3.10 can use match
+            if success == -1:
+                error = 'Server not responding'
+            if success == 0:
+                global weberp
+                weberp = weberp_interface.interface(database=application_database)
+                return redirect(url_for('ai_interactor'))
+            if success == 1:
+                error = "Bad credentials"
+            if success == 2:
+                error = "Undefined issue"
+
+
+    return render_template('login.html', error=error)
+
+
+@app.route('/ai_interactor', methods=['GET', 'POST'])
+def ai_interactor():
     df = pd.DataFrame()
     question4ai = ''
     aigenquery = ''
@@ -63,7 +92,7 @@ def index():
             else:
                 original_question = 'Improper response received.\n\n' + response
 
-        return render_template('index.html'
+        return render_template('ai_interactor.html'
                                , title='webERP AI Interface'
                                , heading='webERP AI Interface'
                                , dataframe=df
@@ -78,9 +107,6 @@ def index():
                                , orig_question=original_question
                                )
 
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
-
-
-
-

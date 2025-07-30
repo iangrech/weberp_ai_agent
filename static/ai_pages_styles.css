@@ -1,6 +1,6 @@
 /*
 -----------------------------------------------------------------------------
-index.html
+index.html & generic
 -----------------------------------------------------------------------------
 */
 body {
@@ -79,7 +79,12 @@ table {
     border-collapse: collapse;
     margin-top: 10px;
 }
-
+.left-align {
+    text-align: left;
+}
+.right-align {
+    text-align: right;
+}
 /*the table name*/
 th {
     background-color: #3498db;
