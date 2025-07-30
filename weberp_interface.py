@@ -13,21 +13,23 @@ class interface:
     database_definition = ''
     db_definition_file = 'db.def'
 
-    def __init__(self, config_file: str = 'config.cfg'):
+    def __init__(self, config_file: str = 'config.cfg', database: str ='weberp'):
         config = configparser.ConfigParser()
         config.read(config_file)
 
         if not config.has_section('mysql'):
             raise ValueError("Configuration file must have a [mysql] section")
+        if not config.has_section('weberp'):
+            raise ValueError("Configuration file must have a [weberp] section")
 
         host = config['mysql']['host']
         usr = config['mysql']['user']
         pwd = config['mysql']['password']
-        db = config['mysql']['database']
+        db = database
         port = config['mysql']['port']
         self.definition_keep_alive_days = int(config['mysql']['definition_keep_alive_days'])
-        self.weberp_version = config['mysql']['weberp_ver']
         self.mysql_version = config['mysql']['mysql_ver']
+        self.weberp_version = config['weberp']['weberp_ver']
 
         self.config = {
                         'host': host,

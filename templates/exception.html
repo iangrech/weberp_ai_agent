@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Exception</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <style>
-        pre {
-
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai_pages_styles.css') }}">
 </head>
 <body>
+    <p>
+        <!--<a href="{{ url_for('ai_interactor') }}">Return to AI Interactor page</a>-->
+    </p>
     <p>
         <h2 class="exception_h2">An Exception has occurred</h2>
         <pre class="exception_pre">{{ message }}</pre>
@@ -30,7 +28,7 @@
     <p/>
     <p/>
     <div style="margin-top: 30px;">
-        <a href="/" class="exception_button">Main Page</a>
+        <a href="{{ url_for('ai_interactor') }}" class="exception_button">Go Back</a>
     </div>
 </body>
 </html>

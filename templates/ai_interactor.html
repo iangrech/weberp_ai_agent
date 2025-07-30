@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai_pages_styles.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>{{ heading }}</h1>
 
-        <form method="POST" class="ai-form">
+        <form method="POST" class="ai-form" action="{{ url_for('ai_interactor') }}">
             <!--<textarea name="ai_question" placeholder="Type your ask to the AI here..." class="ai-input">{{ query }}</textarea>-->
             <table>
                 <thead>
@@ -27,7 +27,18 @@
                 </tbody>
             </table>
             <p/>
-            <button type="submit" class="execute-btn">Execute</button>
+            <p/>
+            <table border=0>
+                <tr>
+                    <td class="left-align">
+                        <button type="submit" class="execute-btn">Execute</button>
+                    </td>
+                    <td class="right-align">
+                        <a href="/" class="exception_button">Logout</a>
+                    </td>
+                </tr>
+            </table>
+
         </form>
 
         {% if not dataframe.empty %}
